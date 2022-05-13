@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Credit card manager</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username_taken">This username is taken</string>
+    <string name="create_account">Don\'t have an account yet? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="credit_card_number">Number</string>
+    <string name="credit_card_expiration">Expiration date</string>
+    <string name="credit_card_expiration_form">Expiration date mm\/dd</string>
+    <string name="credit_card_cvv">CVV</string>
+    <string name="credit_card_create">Add Credit Card</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="logout">Logout</string>
+</resources>
