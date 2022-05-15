@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.example.creditcardmanager.R
 import com.example.creditcardmanager.database.DBHelper
 import com.example.creditcardmanager.model.CreditCard
+import com.example.creditcardmanager.session.SessionManager
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
@@ -23,6 +24,8 @@ class AddCreditCardActivity : AppCompatActivity() {
     private val cardExpirationInput by lazy { findViewById<TextInputEditText>(R.id.newCreditCardExpirationInput) }
     private val cardCvvInput by lazy { findViewById<TextInputEditText>(R.id.newCreditCardCvv) }
 
+    private lateinit var session: SessionManager
+
     private var userId = 0
     private var cardNumber = ""
     private var cardExpiration = ""
@@ -32,18 +35,14 @@ class AddCreditCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_credit_card)
         db = DBHelper(activity)
-        val login = intent.getStringExtra("LOGIN")
-        val password = intent.getStringExtra("PASSWORD")
-        userId = intent.getIntExtra("USER_ID", -1)
-        val user2 = intent.getStringExtra("USER_ID")
-        Log.d("userid", user2.toString())
+//        val login = intent.getStringExtra("LOGIN")
+//        val password = intent.getStringExtra("PASSWORD")
+//        userId = intent.getIntExtra("USER_ID", -1)
 
-        val loginView = findViewById<TextView>(R.id.showLogin).apply {
-            text = login
-        }
-        val passwordView = findViewById<TextView>(R.id.showPassword).apply {
-            text = password
-        }
+        session = SessionManager(getApplicationContext());
+        session.checkLogin()
+        val user = session!!.getUserDetails()
+        userId = user.id
     }
 
     fun addCard(view: View){

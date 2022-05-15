@@ -2,7 +2,6 @@ package com.example.creditcardmanager.cardlist
 
 import android.view.LayoutInflater
 import android.view.View
-import com.example.creditcardmanager.cardlist.cardViewModel
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
