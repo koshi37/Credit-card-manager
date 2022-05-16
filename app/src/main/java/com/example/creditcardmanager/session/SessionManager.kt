@@ -11,8 +11,7 @@ import com.example.creditcardmanager.model.User
 //https://www.androidhive.info/2012/08/android-session-management-using-shared-preferences/
 
 class SessionManager(  // Context
-    var _context: Context
-) {
+    var _context: Context) {
     var sharedPref: SharedPreferences
     var editor: SharedPreferences.Editor
 
@@ -24,6 +23,7 @@ class SessionManager(  // Context
         private const val IS_LOGIN = "IsLoggedIn"
         const val KEY_NAME = "username"
         const val KEY_ID = "uderId"
+        const val IS_REMEMBER = "remember"
     }
 
     init {
@@ -31,11 +31,16 @@ class SessionManager(  // Context
         editor = sharedPref.edit()
     }
 
-    fun createLoginSession(name: String?, id: Int?) {
+    fun createLoginSession(name: String?, id: Int?, remember: Boolean) {
         editor.putBoolean(IS_LOGIN, true)
         editor.putString(KEY_NAME, name)
         editor.putInt(KEY_ID, id!!)
+        editor.putBoolean(IS_REMEMBER, remember)
         editor.commit()
+    }
+
+    fun isRemember(): Boolean {
+        return sharedPref.getBoolean(IS_REMEMBER, false)
     }
 
 //    In order to get the stored preferences data, I added a function called getUserDetails() with the following code.

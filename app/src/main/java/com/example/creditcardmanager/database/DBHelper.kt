@@ -4,9 +4,13 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Base64
 import android.util.Log
 import com.example.creditcardmanager.model.CreditCard
 import com.example.creditcardmanager.model.User
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.util.Base64.getEncoder
 
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -52,11 +56,18 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     GET_ALL_DATA
      */
 
+    fun md5Hash(str: String): String {
+        val md = MessageDigest.getInstance("MD5")
+        val bigInt = BigInteger(1, md.digest(str.toByteArray(Charsets.UTF_8)))
+        return String.format("%032x", bigInt)
+    }
+
     fun register(user: User): Long {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_USER_NAME, user.username)
-        values.put(COLUMN_USER_PASSWORD, user.password)
+        Log.d("register password", md5Hash(user.password) + " " + user.password)
+        values.put(COLUMN_USER_PASSWORD, md5Hash(user.password))
         var id = db.insert(TABLE_USER, null, values)
         db.close()
         return id
@@ -94,10 +105,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         // array of columns to fetch
         val columns = arrayOf(COLUMN_USER_ID)
         val db = this.readableDatabase
+        val encodedPassword = android.util.Base64.encode(password.toByteArray(), android.util.Base64.DEFAULT);
         // selection criteria
         val selection = "$COLUMN_USER_NAME = ? AND $COLUMN_USER_PASSWORD = ?"
         // selection arguments
-        val selectionArgs = arrayOf(username, password)
+        val selectionArgs = arrayOf(username, md5Hash(password))
+        Log.d("login password", md5Hash(password) + " " + password)
         // query user table with conditions
         val cursor = db.query(TABLE_USER, //Table to query
             columns, //columns to return
@@ -195,20 +208,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val selectQuery = ("SELECT * FROM " + TABLE_CREDIT_CARD + " WHERE "
                 + COLUMN_USER_ID + " = " + userId)
         val db = this.readableDatabase
-//        // array of columns to fetch
-//        val columns = arrayOf(COLUMN_CREDIT_CARD_ID, COLUMN_CREDIT_CARD_NUMBER, COLUMN_CREDIT_CARD_EXPIRATON, COLUMN_CREDIT_CARD_CVV, COLUMN_USER_ID)
-//        // sorting orders
-//        val sortOrder = "$COLUMN_CREDIT_CARD_ID ASC"
-//
-//
-//        // query the card table
-//        val cursor = db.query(TABLE_CREDIT_CARD, //Table to query
-//            columns,            //columns to return
-//            null,     //columns for the WHERE clause
-//            null,  //The values for the WHERE clause
-//            null,      //group the rows
-//            null,       //filter by row groups
-//            sortOrder)         //The sort order
 
         val cardList = ArrayList<CreditCard>()
         val cursor = db.rawQuery(selectQuery, null)
@@ -226,6 +225,23 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         cursor.close()
         db.close()
         return cardList
+    }
+
+    fun getCardDetails(cardId: Int): CreditCard? {
+        val db = this.readableDatabase
+
+        val selectQuery = ("SELECT * FROM " + TABLE_CREDIT_CARD + " WHERE "
+                + COLUMN_CREDIT_CARD_ID + " = " + cardId)
+
+        val c = db.rawQuery(selectQuery, null)
+
+        c?.moveToFirst()
+
+        val cardNumber = c.getString(c.getColumnIndex(COLUMN_CREDIT_CARD_NUMBER)) ?: ""
+        val cardExp = c.getString(c.getColumnIndex(COLUMN_CREDIT_CARD_EXPIRATON)) ?: ""
+        val cardCvv = c.getInt(c.getColumnIndex(COLUMN_CREDIT_CARD_CVV)) ?: 0
+        val userId = c.getInt(c.getColumnIndex(COLUMN_USER_ID)) ?: 0
+        return CreditCard(cardId, userId, cardNumber, cardExp, cardCvv)
     }
 
     companion object {

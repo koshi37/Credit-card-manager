@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CreditCardManager">
         <activity
+            android:name=".activities.CardDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CreditCardListActivity"
             android:exported="false" />
         <activity

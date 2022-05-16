@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.creditcardmanager.R
@@ -17,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var session: SessionManager
     private val usernameLoginInput by lazy { findViewById<TextInputEditText>(R.id.usernameLoginInput) }
     private val passwordLoginInput by lazy { findViewById<TextInputEditText>(R.id.passwordLoginInput) }
+    private val rememberMeInput by lazy { findViewById<CheckBox>(R.id.rememberMeCheckbox) }
     private lateinit var db: DBHelper
     private val activity = this@LoginActivity
     
@@ -28,8 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
         session = SessionManager(getApplicationContext());
         val user = session.getUserDetails()
-        Log.d("testuje logowanie auto", user.toString())
-        if(user.id != null && user.id != 0)
+        if(user.id != null && user.id != 0 && session.isRemember())
         {
             var userId = user.id
             val int = Intent(this, CreditCardListActivity::class.java)
@@ -43,13 +44,13 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, CreditCardListActivity::class.java)
         val login = usernameLoginInput.text.toString()
         val password = passwordLoginInput.text.toString()
-        intent.putExtra("LOGIN", login)
-        intent.putExtra("PASSWORD", password)
+        Log.d("remember", rememberMeInput.isChecked().toString())
+//        intent.putExtra("LOGIN", login)
         var result = db.login(login, password)
         if(result) {
             var userId = db.GetUserID(login)
-            session?.createLoginSession(login, userId);
-            intent.putExtra("USER_ID", userId)
+            session?.createLoginSession(login, userId, rememberMeInput.isChecked());
+//            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
     }

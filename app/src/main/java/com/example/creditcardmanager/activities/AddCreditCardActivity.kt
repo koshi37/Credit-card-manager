@@ -39,7 +39,7 @@ class AddCreditCardActivity : AppCompatActivity() {
 //        val password = intent.getStringExtra("PASSWORD")
 //        userId = intent.getIntExtra("USER_ID", -1)
 
-        session = SessionManager(getApplicationContext());
+        session = SessionManager(applicationContext)
         session.checkLogin()
         val user = session!!.getUserDetails()
         userId = user.id

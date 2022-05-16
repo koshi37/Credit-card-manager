@@ -1,5 +1,6 @@
 package com.example.creditcardmanager.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -31,7 +32,7 @@ class CreditCardListActivity : AppCompatActivity() {
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(this)
 
-        session = SessionManager(getApplicationContext());
+        session = SessionManager(applicationContext);
         session.checkLogin()
 
         val user = session!!.getUserDetails()
@@ -48,7 +49,7 @@ class CreditCardListActivity : AppCompatActivity() {
 
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session?.getUserDetails().toString(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "User Login Status: " + session?.getUserDetails().toString(), Toast.LENGTH_LONG).show();
     }
 
     fun addCard(view: View) {

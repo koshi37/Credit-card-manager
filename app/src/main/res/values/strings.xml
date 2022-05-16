@@ -15,4 +15,10 @@
     <string name="credit_card_create">Add Credit Card</string>
     <string name="cancel_button">Cancel</string>
     <string name="logout">Logout</string>
+    <string name="remember">Remember me</string>
+    <string name="card_number">Card number:</string>
+    <string name="card_expiration">Expiration date:</string>
+    <string name="card_cvv">CVV:</string>
+    <string name="return_to_list">Return to list</string>
+    <string name="share">Share</string>
 </resources>
