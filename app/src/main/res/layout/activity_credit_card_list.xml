@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.CreditCardListActivity">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="importCards"
+        android:text="@string/importcards"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CardListRecyclerView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CardListRecyclerView"
         android:layout_width="0dp"
@@ -21,13 +33,13 @@
         android:id="@+id/addCardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:onClick="addCard"
         android:text="@string/credit_card_create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CardListRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/exportButton" />
 
     <Button
         android:id="@+id/cardListLogout"
@@ -40,4 +52,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addCardButton" />
+
+    <Button
+        android:id="@+id/exportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="exportCards"
+        android:text="@string/export"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

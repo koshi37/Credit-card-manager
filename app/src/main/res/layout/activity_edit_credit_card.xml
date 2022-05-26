@@ -4,62 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddCreditCardActivity">
+    tools:context=".activities.EditCreditCardActivity">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/newCreditCardNumberInput"
+        android:id="@+id/editCreditCardCvv"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/credit_card_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/newCreditCardExpirationInput"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="@string/credit_card_expiration_form"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCreditCardNumberInput" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/newCreditCardCvv"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/credit_card_cvv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCreditCardExpirationInput" />
+        app:layout_constraintTop_toBottomOf="@+id/editCreditCardExpirationInput" />
 
     <Button
-        android:id="@+id/submitNewCreditCard"
+        android:id="@+id/addCreditCardCancel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:onClick="addCard"
-        android:text="@string/credit_card_create"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCreditCardCvv" />
-
-    <Button
-        android:id="@+id/addCreditCardCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:onClick="cancel"
         android:text="@string/cancel_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submitNewCreditCard" />
+        app:layout_constraintTop_toBottomOf="@+id/submitCardChanges" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editCreditCardExpirationInput"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/credit_card_expiration_form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCreditCardNumberInput" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editCreditCardNumberInput"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/credit_card_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <Button
+        android:id="@+id/submitCardChanges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="editCard"
+        android:text="@string/save_changes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCreditCardCvv" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Edit card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CheckBox
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.creditcardmanager.R
 import com.example.creditcardmanager.database.DBHelper
 import com.example.creditcardmanager.session.SessionManager
@@ -30,8 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         session = SessionManager(getApplicationContext());
         val user = session.getUserDetails()
-        if(user.id != null && user.id != 0 && session.isRemember())
-        {
+        if(user.id != null && user.id != 0 && session.isRemember()) {
             var userId = user.id
             val int = Intent(this, CreditCardListActivity::class.java)
             int.putExtra("USER_ID", userId)
@@ -52,6 +53,11 @@ class LoginActivity : AppCompatActivity() {
             session?.createLoginSession(login, userId, rememberMeInput.isChecked());
 //            intent.putExtra("USER_ID", userId)
             startActivity(intent)
+        }
+        else {
+            val wrongLoginView = findViewById<TextView>(R.id.wrongLoginPass).apply {
+                isVisible = true
+            }
         }
     }
 

@@ -72,12 +72,12 @@
         android:id="@+id/returnToListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
         android:onClick="returnToList"
         android:text="@string/return_to_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shareButton" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <Button
         android:id="@+id/shareButton"
@@ -88,4 +88,26 @@
         android:text="@string/share"
         app:layout_constraintBottom_toBottomOf="@+id/cardCvvDetails"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:onClick="deleteCard"
+        android:text="@string/delete_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:onClick="editCardMenu"
+        android:text="@string/edit_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shareButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

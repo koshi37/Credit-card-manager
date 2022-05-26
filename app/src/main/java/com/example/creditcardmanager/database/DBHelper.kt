@@ -2,15 +2,14 @@ package com.example.creditcardmanager.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Base64
 import android.util.Log
 import com.example.creditcardmanager.model.CreditCard
 import com.example.creditcardmanager.model.User
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.util.Base64.getEncoder
 
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -139,56 +138,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return userId
     }
 
-    fun getName(username: String, password: String): User? {
-        val db = this.readableDatabase
-
-        // below code returns a cursor to
-        // read data from the database
-        val selectQuery = ("SELECT * FROM " + TABLE_USER + " WHERE "
-                + COLUMN_USER_NAME + " = " + username + " AND "
-                + COLUMN_USER_PASSWORD + " = " + password)
-
-        Log.d("selectQuery user", selectQuery)
-
-        val c = db.rawQuery(selectQuery, null)
-
-        c?.moveToFirst()
-
-
-        val id = c.getInt(c.getColumnIndex(COLUMN_USER_ID)) ?: 0
-        val username = c.getString(c.getColumnIndex(COLUMN_USER_NAME)) ?: ""
-        return User(id, username, "")
-    }
-
-    fun getAllUser(): List<User> {
-        // array of columns to fetch
-        val columns = arrayOf(COLUMN_USER_ID, COLUMN_USER_NAME, COLUMN_USER_PASSWORD)
-        // sorting orders
-        val sortOrder = "$COLUMN_USER_NAME ASC"
-        val userList = ArrayList<User>()
-        val db = this.readableDatabase
-        // query the user table
-        val cursor = db.query(TABLE_USER, //Table to query
-            columns,            //columns to return
-            null,     //columns for the WHERE clause
-            null,  //The values for the WHERE clause
-            null,      //group the rows
-            null,       //filter by row groups
-            sortOrder)         //The sort order
-        if (cursor.moveToFirst()) {
-            do {
-                val user = User(id = cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID)).toInt(),
-                    username = cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)),
-                    password = cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)))
-                userList.add(user)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
-        return userList
-    }
-
-
     /*
     CREDIT CARD METHODS
      */
@@ -227,6 +176,18 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return cardList
     }
 
+    fun getAllUserCardsCursors(userId: Int): Cursor {
+        val selectQuery = ("SELECT * FROM " + TABLE_CREDIT_CARD + " WHERE "
+                + COLUMN_USER_ID + " = " + userId)
+        val db = this.readableDatabase
+
+        val cursor = db.rawQuery(selectQuery, null)
+
+        cursor.close()
+        db.close()
+        return cursor
+    }
+
     fun getCardDetails(cardId: Int): CreditCard? {
         val db = this.readableDatabase
 
@@ -242,6 +203,26 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val cardCvv = c.getInt(c.getColumnIndex(COLUMN_CREDIT_CARD_CVV)) ?: 0
         val userId = c.getInt(c.getColumnIndex(COLUMN_USER_ID)) ?: 0
         return CreditCard(cardId, userId, cardNumber, cardExp, cardCvv)
+    }
+
+    fun deleteCard(cardId: Int) {
+        val db = this.writableDatabase
+        db.delete(
+            TABLE_CREDIT_CARD, "$COLUMN_CREDIT_CARD_ID = ?",
+            arrayOf(cardId.toString()))
+        db.close()
+    }
+
+    fun updateCard(card: CreditCard) {
+        val db = this.writableDatabase
+        val data = ContentValues()
+        data.put(COLUMN_CREDIT_CARD_NUMBER, card.cardNumber);
+        data.put(COLUMN_CREDIT_CARD_EXPIRATON, card.expiration);
+        data.put(COLUMN_CREDIT_CARD_CVV, card.cvv);
+        val whereclause = "$COLUMN_CREDIT_CARD_ID=?"
+        val whereargs = arrayOf(card.id.toString())
+        db.update(TABLE_CREDIT_CARD, data, whereclause, whereargs)
+        db.close()
     }
 
     companion object {

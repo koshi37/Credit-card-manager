@@ -15,8 +15,6 @@ import java.util.*
 
 class AddCreditCardActivity : AppCompatActivity() {
 
-    private var login :String?= ""
-    private var password :String?= ""
     private lateinit var db: DBHelper
     private val activity = this@AddCreditCardActivity
 
@@ -35,9 +33,6 @@ class AddCreditCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_credit_card)
         db = DBHelper(activity)
-//        val login = intent.getStringExtra("LOGIN")
-//        val password = intent.getStringExtra("PASSWORD")
-//        userId = intent.getIntExtra("USER_ID", -1)
 
         session = SessionManager(applicationContext)
         session.checkLogin()
@@ -56,9 +51,6 @@ class AddCreditCardActivity : AppCompatActivity() {
     }
 
     fun cancel(view: View){
-        val users = db.getAllUserCards(userId)
-//        Log.d(users)
-        Log.d("cards", Arrays.toString(users.toTypedArray()))
         val intent = Intent(this, CreditCardListActivity::class.java)
         startActivity(intent)
     }

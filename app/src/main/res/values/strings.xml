@@ -21,4 +21,10 @@
     <string name="card_cvv">CVV:</string>
     <string name="return_to_list">Return to list</string>
     <string name="share">Share</string>
+    <string name="export">Export to file</string>
+    <string name="importcards">Import cards from file</string>
+    <string name="delete_card">Delete card</string>
+    <string name="wrong_login_password">Wrong login or password</string>
+    <string name="save_changes">Save changes</string>
+    <string name="edit_card">Edit card</string>
 </resources>
